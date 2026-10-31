@@ -47,6 +47,12 @@ Loaded wards are indexed server-side. A ward stops affecting meteors when its bl
 
 `/ntmadditions meteor [targets]` (permission level 2) calls NTM's natural meteor strike path for the targeted players. With no target it strikes the executing player. It uses NTM's normal spawn height, random offset, fall, impact, and charm checks, so a Meteor Charm can cancel it, a Meteor Ward can cancel it if the meteor's spawn point is in range, a Charm of Protection can divert it, and a Protection Ward can divert it if the meteor's spawn point is in range.
 
+## Configuration
+
+`config/ntmadditions-common.toml`:
+
+- `localMinePrimeSound` (default `true`) - when enabled, the mine arming sound uses a custom local sound event that fades out over 32 blocks instead of NTM's long-range volume-3 sound. Disabled keeps NTM's original sound and volume. Explosions, damage, block destruction, and radiation are unchanged. The bundled sound is a mono downmix of NTM's `hbm:weapon/fstbmbstart` so it can be attenuated positionally.
+
 ## Building
 
 ```powershell

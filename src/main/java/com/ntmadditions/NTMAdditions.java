@@ -2,15 +2,19 @@ package com.ntmadditions;
 
 import com.ntmadditions.block.WardManager;
 import com.ntmadditions.command.MeteorCommand;
+import com.ntmadditions.config.NTMAdditionsConfig;
 import com.ntmadditions.registry.ModBlockEntities;
 import com.ntmadditions.registry.ModBlocks;
 import com.ntmadditions.registry.ModCreativeTabs;
 import com.ntmadditions.registry.ModItems;
+import com.ntmadditions.registry.ModSoundEvents;
 import dev.golem.core.world.DamageEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -26,11 +30,14 @@ public final class NTMAdditions {
 
     public static final String MOD_ID = "ntmadditions";
 
-    public NTMAdditions(IEventBus modBus) {
+    public NTMAdditions(IEventBus modBus, ModContainer modContainer) {
+        modContainer.registerConfig(ModConfig.Type.COMMON, NTMAdditionsConfig.SPEC);
+
         ModBlocks.BLOCKS.register(modBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modBus);
         ModItems.ITEMS.register(modBus);
         ModCreativeTabs.TABS.register(modBus);
+        ModSoundEvents.SOUND_EVENTS.register(modBus);
 
         // NTM installs this bridge during its own startup; installing it here is harmless when it
         // already ran and makes the addon's listener independent of NTM's initialization order.

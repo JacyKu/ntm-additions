@@ -4,7 +4,8 @@
   "package": "com.ntmadditions.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "BossSpawnHandlerMixin"
+    "BossSpawnHandlerMixin",
+    "TileEntityLandmineMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,12 @@
+{
+  "mine_prime": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "ntmadditions:mine_prime",
+        "stream": false,
+        "attenuation_distance": 32
+      }
+    ]
+  }
+}

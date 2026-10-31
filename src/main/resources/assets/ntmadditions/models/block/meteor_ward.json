@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/cube_bottom_top",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "top": "minecraft:block/beacon",
-    "bottom": "minecraft:block/obsidian",
-    "side": "minecraft:block/amethyst_block"
+    "all": "ntmadditions:block/ward_meteor"
   }
 }
