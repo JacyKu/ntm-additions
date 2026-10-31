@@ -6,3 +6,4 @@ runs/
 *.ipr
 *.iws
 out/
+.vscode/
