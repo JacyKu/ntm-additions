@@ -1,18 +1,24 @@
-# NTM Additions
+# Random NTM Additions
+
+<img width="128" height="128" alt="ntmadditions" src="https://github.com/user-attachments/assets/09928283-2979-41e2-98df-a3bc007c0de1" />
 
 A small NeoForge 1.21.1 addon for [NTM Continuum](https://github.com/Warfactory-Official/NTM-Continuum) and [Golem Core](https://github.com/Warfactory-Official/Golem-Core).
 
-It adds Curios-slot versions of NTM's two armor-insert charms:
+Random NTM Additions adds random things we wanted in "NTM: Contiuum" for our server.
+Currently adds:
 
-- **Meteor Charm (Curio)** — stops meteorite strikes and negates broadcaster damage.
-- **Charm of Protection (Curio)** — diverts meteorite strikes, prevents their block damage, and halves broadcaster damage.
+Curios-slot versions of NTM's two armor-insert charms:
+*   **Meteor Charm (Curio)** - An equippable curio version of the "Meteor Charm"
+*   **Charm of Protection (Curio)** - An equippable curio version of the "Charm of Protection"
+*   They fit into any curio slot, and if no curio slots are present then a charm slot is added to be used for them.
 
-It also adds two placeable ward blocks:
+Two placeable ward blocks:
+*   **Meteor Ward** - Entirely stops meteors from spawning within its range
+*   **Protection Ward** - Meteors spawned within its range are diverted away, and cannot damage any blocks
+*   Their range can be changed from 50 to 250 blocks by right clicking them
 
-- **Meteor Ward** — stops meteor strikes whose spawn point falls inside its adjustable radius.
-- **Protection Ward** — diverts meteor strikes whose spawn point falls inside its adjustable radius and prevents their block damage.
-
-The original `hbm:meteor_charm` and `hbm:protection_charm` armor inserts are untouched. Recipes for the Curios versions and the wards are intentionally not included yet.
+Config at `config/ntmadditions-common.toml`:
+*   `localMinePrimeSound` (default `true`) - when enabled, the mine arming/priming sound (beep) uses a custom local sound event that fades out over 32 blocks instead of NTM's default long-range sound. Disabled keeps NTM's original sound and volume. (The beep is annoying to hear when loading chunks).
 
 ## Requirements
 
