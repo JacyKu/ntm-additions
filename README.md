@@ -1,5 +1,7 @@
 # Random NTM Additions
 
+<img width="128" height="128" alt="ntmadditions" src="https://github.com/user-attachments/assets/09928283-2979-41e2-98df-a3bc007c0de1" />
+
 A small NeoForge 1.21.1 addon for [NTM Continuum](https://github.com/Warfactory-Official/NTM-Continuum) and [Golem Core](https://github.com/Warfactory-Official/Golem-Core).
 
 Random NTM Additions adds random things we wanted in "NTM: Contiuum" for our server.
