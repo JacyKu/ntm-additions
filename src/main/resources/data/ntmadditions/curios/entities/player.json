@@ -1,0 +1,17 @@
+{
+  "entities": [
+    "minecraft:player"
+  ],
+  "slots": [
+    "head",
+    "hands",
+    "charm",
+    "ring",
+    "belt",
+    "back",
+    "necklace",
+    "bracelet",
+    "body",
+    "curio"
+  ]
+}

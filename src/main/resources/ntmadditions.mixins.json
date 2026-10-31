@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.ntmadditions.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BossSpawnHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
