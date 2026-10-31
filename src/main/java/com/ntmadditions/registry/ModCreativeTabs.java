@@ -20,6 +20,8 @@ public final class ModCreativeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.METEOR_CHARM_CURIO.get());
                         output.accept(ModItems.PROTECTION_CHARM_CURIO.get());
+                        output.accept(ModItems.METEOR_WARD.get());
+                        output.accept(ModItems.PROTECTION_WARD.get());
                     })
                     .build());
 

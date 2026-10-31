@@ -8,7 +8,15 @@
   "item.ntmadditions.charm.protection.divert": "Diverts meteors away from the player.",
   "item.ntmadditions.charm.protection.blocks": "Meteors no longer destroy blocks.",
   "item.ntmadditions.charm.protection.damage": "Halves broadcaster damage",
+  "block.ntmadditions.meteor_ward": "Meteor Ward",
+  "block.ntmadditions.meteor_ward.desc": "Stops meteor strikes that spawn inside its radius; negates broadcaster damage for players in range.",
+  "block.ntmadditions.meteor_ward.usage": "Right-click to cycle the protection radius.",
+  "message.ntmadditions.meteor_ward.radius": "Meteor Ward radius: %s blocks",
+  "block.ntmadditions.protection_ward": "Protection Ward",
+  "block.ntmadditions.protection_ward.desc": "Diverts meteor strikes that spawn inside its radius; halves broadcaster damage for players in range.",
+  "block.ntmadditions.protection_ward.usage": "Right-click to cycle the protection radius.",
+  "message.ntmadditions.protection_ward.radius": "Protection Ward radius: %s blocks",
   "command.ntmadditions.meteor.success": "Called down %s natural meteor strike(s) on %s target(s).",
-  "command.ntmadditions.meteor.prevented": "No meteor spawned; a Meteor Charm prevented the strike.",
+  "command.ntmadditions.meteor.prevented": "No meteor spawned; a Meteor Charm or Meteor Ward prevented the strike.",
   "command.ntmadditions.meteor.disabled": "Meteor strikes are disabled in NTM's world config."
 }

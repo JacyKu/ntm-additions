@@ -7,7 +7,12 @@ It adds Curios-slot versions of NTM's two armor-insert charms:
 - **Meteor Charm (Curio)** — stops meteorite strikes and negates broadcaster damage.
 - **Charm of Protection (Curio)** — diverts meteorite strikes, prevents their block damage, and halves broadcaster damage.
 
-The original `hbm:meteor_charm` and `hbm:protection_charm` armor inserts are untouched. Recipes for the Curios versions are intentionally not included yet.
+It also adds two placeable ward blocks:
+
+- **Meteor Ward** — stops meteor strikes whose spawn point falls inside its adjustable radius.
+- **Protection Ward** — diverts meteor strikes whose spawn point falls inside its adjustable radius and prevents their block damage.
+
+The original `hbm:meteor_charm` and `hbm:protection_charm` armor inserts are untouched. Recipes for the Curios versions and the wards are intentionally not included yet.
 
 ## Requirements
 
@@ -25,11 +30,22 @@ The original `hbm:meteor_charm` and `hbm:protection_charm` armor inserts are unt
 - The addon also ships a `charm` slot definition under its own namespace. Curios merges it with the built-in charm slot when one exists, or supplies the slot when it does not.
 - Curios 9.5.1 does not assign any slots to players by default, so the addon ships `data/ntmadditions/curios/entities/player.json` to assign the standard slots (`head`, `hands`, `charm`, `ring`, `belt`, `back`, `necklace`, `bracelet`, `body`, and `curio`) to `minecraft:player`.
 - A Golem Core `DamageEvents` listener reproduces the broadcaster-damage effect.
-- A small Mixin into `com.hbm.handler.BossSpawnHandler#strike` makes the meteor checks see the Curios items too.
+- A small Mixin into `com.hbm.handler.BossSpawnHandler#strike` makes the meteor checks see the Curios items too, and applies ward effects at the meteor's actual spawn point.
+
+## Wards
+
+Both wards are block entities with an independently adjustable radius. Right-click a ward to cycle its radius through **50, 100, 150, 200, and 250 blocks**, wrapping back to 50 after 250. The new radius is shown in the action bar, stored in the block entity, and applied immediately.
+
+Wards act on the meteor's actual spawn point, not the targeted player's position. NTM offsets meteor spawns by up to 100 blocks from the target, so a ward only affects a meteor if its spawn point is inside the radius. For example, a 50-block ward does not stop a meteor that spawns 75 blocks away, even if the targeted player is near the ward.
+
+- **Meteor Ward** — discards meteor strikes whose spawn point is inside its radius, and negates broadcaster damage for players inside the radius.
+- **Protection Ward** — diverts meteor strikes whose spawn point is inside its radius so they spawn safe and do not destroy blocks, and halves broadcaster damage for players inside the radius.
+
+Loaded wards are indexed server-side. A ward stops affecting meteors when its block entity is removed or its chunk unloads, and overlapping wards simply extend the protected area.
 
 ## Commands
 
-`/ntmadditions meteor [targets]` (permission level 2) calls NTM's natural meteor strike path for the targeted players. With no target it strikes the executing player. It uses NTM's normal spawn height, random offset, fall, impact, and charm checks, so a Meteor Charm can still cancel it and a Charm of Protection can still divert it.
+`/ntmadditions meteor [targets]` (permission level 2) calls NTM's natural meteor strike path for the targeted players. With no target it strikes the executing player. It uses NTM's normal spawn height, random offset, fall, impact, and charm checks, so a Meteor Charm can cancel it, a Meteor Ward can cancel it if the meteor's spawn point is in range, a Charm of Protection can divert it, and a Protection Ward can divert it if the meteor's spawn point is in range.
 
 ## Building
 

@@ -1,6 +1,9 @@
 package com.ntmadditions;
 
+import com.ntmadditions.block.WardManager;
 import com.ntmadditions.command.MeteorCommand;
+import com.ntmadditions.registry.ModBlockEntities;
+import com.ntmadditions.registry.ModBlocks;
 import com.ntmadditions.registry.ModCreativeTabs;
 import com.ntmadditions.registry.ModItems;
 import dev.golem.core.world.DamageEvents;
@@ -24,6 +27,8 @@ public final class NTMAdditions {
     public static final String MOD_ID = "ntmadditions";
 
     public NTMAdditions(IEventBus modBus) {
+        ModBlocks.BLOCKS.register(modBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modBus);
         ModItems.ITEMS.register(modBus);
         ModCreativeTabs.TABS.register(modBus);
 
@@ -50,9 +55,11 @@ public final class NTMAdditions {
         if (!"broadcast".equals(event.source().getMsgId())) return;
         if (!(event.entity() instanceof Player player)) return;
 
-        if (hasCurio(player, ModItems.METEOR_CHARM_CURIO.get())) {
+        if (WardManager.isMeteorProtected(player)
+                || hasCurio(player, ModItems.METEOR_CHARM_CURIO.get())) {
             event.setAmount(0F);
-        } else if (hasCurio(player, ModItems.PROTECTION_CHARM_CURIO.get())) {
+        } else if (WardManager.isProtectionProtected(player)
+                || hasCurio(player, ModItems.PROTECTION_CHARM_CURIO.get())) {
             event.setAmount(event.amount() * 0.5F);
         }
     }
