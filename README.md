@@ -4,21 +4,57 @@
 
 A small NeoForge 1.21.1 addon for [NTM Continuum](https://github.com/Warfactory-Official/NTM-Continuum) and [Golem Core](https://github.com/Warfactory-Official/Golem-Core).
 
-Random NTM Additions adds random things we wanted in "NTM: Contiuum" for our server.
-Currently adds:
+Random NTM Additions adds random things we wanted in "NTM: Continuum" for our server.
 
-Curios-slot versions of NTM's two armor-insert charms:
-*   **Meteor Charm (Curio)** - An equippable curio version of the "Meteor Charm"
-*   **Charm of Protection (Curio)** - An equippable curio version of the "Charm of Protection"
-*   They fit into any curio slot, and if no curio slots are present then a charm slot is added to be used for them.
+**Version 0.2.0**
+
+## What it adds
+
+### Curios charm variants
+
+Equippable Curios versions of NTM's two armor-insert charms:
+
+- **Meteor Charm (Curio)** — stops meteor strikes aimed at the wearer and negates broadcaster damage.
+- **Charm of Protection (Curio)** — diverts meteor strikes, prevents their block damage, and halves broadcaster damage.
+
+Both charms fit in any Curios slot. The addon also supplies a fallback charm slot and the player slot assignments Curios 9.5.1 expects, so the slots appear even on a fresh install.
+
+The original armor-insert `hbm:meteor_charm` and `hbm:protection_charm` are untouched.
+
+### Ward blocks
 
 Two placeable ward blocks:
-*   **Meteor Ward** - Entirely stops meteors from spawning within its range
-*   **Protection Ward** - Meteors spawned within its range are diverted away, and cannot damage any blocks
-*   Their range can be changed from 50 to 250 blocks by right clicking them
 
-Config at `config/ntmadditions-common.toml`:
-*   `localMinePrimeSound` (default `true`) - when enabled, the mine arming/priming sound (beep) uses a custom local sound event that fades out over 32 blocks instead of NTM's default long-range sound. Disabled keeps NTM's original sound and volume. (The beep is annoying to hear when loading chunks).
+- **Meteor Ward** — stops meteor strikes whose actual spawn point is inside its radius, and negates broadcaster damage for players inside the radius.
+- **Protection Ward** — diverts meteor strikes whose actual spawn point is inside its radius so they spawn safe and cannot destroy blocks, and halves broadcaster damage for players inside the radius.
+
+Right-click either ward to cycle its radius through **50, 100, 150, 200, and 250 blocks**, wrapping back to 50 after 250. The new radius is shown in the action bar, stored in the block entity, and applied immediately.
+
+Wards act on the meteor's spawn point, not the targeted player's position. NTM offsets meteor spawns by up to 100 blocks from the target, so a 50-block ward does not affect a meteor that spawns 75 blocks away even if the targeted player is near the ward.
+
+Loaded wards are indexed server-side. A ward stops affecting meteors when its block entity is removed or its chunk unloads, and overlapping wards extend the protected area.
+
+### Dutch Air Raid siren cassette
+
+Adds a new cassette track for HBM's Machine Siren:
+
+- Item: **Dutch Air Raid Siren Track** (`ntmadditions:cassette_dutch_air_raid`)
+- Track/sound: `ntmadditions:dutch_air_raid`
+- Sound file: `dutchairraid.ogg`, streamed
+- Loop type: `LOOP`
+- Range/volume: 500
+
+Insert the cassette into an HBM Machine Siren to play the Dutch air raid siren. The track is registered through NTM's public cassette API and uses HBM's normal siren distance fading. No newer HBM version is required; NTM Continuum 1.0.3 already exposes the needed API.
+
+### Fluid tank safety
+
+Machine fluid tanks no longer rupture when storing highly corrosive fluids. The corrosive-fluid branch that sets the tank to its exploded state is suppressed, so the tank keeps functioning instead of leaking/destroying itself.
+
+The antimatter rupture path is unchanged. Steel barrels still convert to corroded barrels when exposed to highly corrosive fluids; this change only affects the machine fluid tank's corrosive rupture.
+
+### Command
+
+`/ntmadditions meteor [targets]` (permission level 2) calls NTM's natural meteor strike path for the targeted players. With no target it strikes the executing player. It uses NTM's normal spawn height, random offset, fall, impact, and charm/ward checks.
 
 ## Requirements
 
@@ -32,32 +68,23 @@ Config at `config/ntmadditions-common.toml`:
 
 ## How it works
 
-- Both items implement Curios' `ICurioItem` and are added to both the `curios:charm` and `curios:curio` item tags, so they fit in a charm slot or any other Curios slot.
-- The addon also ships a `charm` slot definition under its own namespace. Curios merges it with the built-in charm slot when one exists, or supplies the slot when it does not.
+- Both charm items implement Curios' `ICurioItem` and are added to the `curios:curio` item tag, so they fit in any Curios slot.
+- The addon ships a `charm` slot definition under its own namespace. Curios merges it with the built-in charm slot when one exists, or supplies the slot when it does not.
 - Curios 9.5.1 does not assign any slots to players by default, so the addon ships `data/ntmadditions/curios/entities/player.json` to assign the standard slots (`head`, `hands`, `charm`, `ring`, `belt`, `back`, `necklace`, `bracelet`, `body`, and `curio`) to `minecraft:player`.
-- A Golem Core `DamageEvents` listener reproduces the broadcaster-damage effect.
-- A small Mixin into `com.hbm.handler.BossSpawnHandler#strike` makes the meteor checks see the Curios items too, and applies ward effects at the meteor's actual spawn point.
-
-## Wards
-
-Both wards are block entities with an independently adjustable radius. Right-click a ward to cycle its radius through **50, 100, 150, 200, and 250 blocks**, wrapping back to 50 after 250. The new radius is shown in the action bar, stored in the block entity, and applied immediately.
-
-Wards act on the meteor's actual spawn point, not the targeted player's position. NTM offsets meteor spawns by up to 100 blocks from the target, so a ward only affects a meteor if its spawn point is inside the radius. For example, a 50-block ward does not stop a meteor that spawns 75 blocks away, even if the targeted player is near the ward.
-
-- **Meteor Ward** — discards meteor strikes whose spawn point is inside its radius, and negates broadcaster damage for players inside the radius.
-- **Protection Ward** — diverts meteor strikes whose spawn point is inside its radius so they spawn safe and do not destroy blocks, and halves broadcaster damage for players inside the radius.
-
-Loaded wards are indexed server-side. A ward stops affecting meteors when its block entity is removed or its chunk unloads, and overlapping wards simply extend the protected area.
-
-## Commands
-
-`/ntmadditions meteor [targets]` (permission level 2) calls NTM's natural meteor strike path for the targeted players. With no target it strikes the executing player. It uses NTM's normal spawn height, random offset, fall, impact, and charm checks, so a Meteor Charm can cancel it, a Meteor Ward can cancel it if the meteor's spawn point is in range, a Charm of Protection can divert it, and a Protection Ward can divert it if the meteor's spawn point is in range.
+- A Golem Core `DamageEvents` listener reproduces the broadcaster-damage effects for the charms and wards.
+- A Mixin into `com.hbm.handler.BossSpawnHandler` makes the meteor checks see the Curios items and applies ward effects at the meteor's actual spawn point.
+- A Mixin into `TileEntityMachineFluidTank.serverTick` suppresses only the highly-corrosive `explode()` call.
+- The Dutch Air Raid track is registered through NTM's `ItemCassette.TrackType.register(...)` and uses the custom `ntmadditions:dutch_air_raid` sound event.
 
 ## Configuration
 
 `config/ntmadditions-common.toml`:
 
-- `localMinePrimeSound` (default `true`) - when enabled, the mine arming sound uses a custom local sound event that fades out over 32 blocks instead of NTM's long-range volume-3 sound. Disabled keeps NTM's original sound and volume. Explosions, damage, block destruction, and radiation are unchanged. The bundled sound is a mono downmix of NTM's `hbm:weapon/fstbmbstart` so it can be attenuated positionally.
+- `localMinePrimeSound` (default `true`) — when enabled, the mine arming sound uses a custom local sound event that fades out over 32 blocks instead of NTM's long-range volume-3 sound. Disabled keeps NTM's original sound and volume. Explosions, damage, block destruction, and radiation are unchanged. The bundled sound is a mono downmix of NTM's `hbm:weapon/fstbmbstart` so it can be attenuated positionally.
+
+## Recipes
+
+Recipes for the Curios charms, both wards, and the Dutch Air Raid cassette are intentionally not included yet.
 
 ## Building
 
