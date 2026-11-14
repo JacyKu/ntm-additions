@@ -22,6 +22,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.PROTECTION_CHARM_CURIO.get());
                         output.accept(ModItems.METEOR_WARD.get());
                         output.accept(ModItems.PROTECTION_WARD.get());
+                        output.accept(ModItems.DUTCH_AIR_RAID_CASSETTE.get());
                     })
                     .build());
 

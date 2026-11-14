@@ -26,5 +26,14 @@ public final class ModSoundEvents {
                             ResourceLocation.fromNamespaceAndPath(NTMAdditions.MOD_ID, "mine_prime"),
                             32.0F));
 
+    /**
+     * Dutch air raid siren track. The siren machine handles distance fading itself, so this uses a
+     * normal variable-range event.
+     */
+    public static final DeferredHolder<SoundEvent, SoundEvent> DUTCH_AIR_RAID =
+            SOUND_EVENTS.register("dutch_air_raid",
+                    () -> SoundEvent.createVariableRangeEvent(
+                            ResourceLocation.fromNamespaceAndPath(NTMAdditions.MOD_ID, "dutch_air_raid")));
+
     private ModSoundEvents() {}
 }

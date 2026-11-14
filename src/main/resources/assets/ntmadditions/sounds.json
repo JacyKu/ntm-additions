@@ -8,5 +8,14 @@
         "attenuation_distance": 32
       }
     ]
+  },
+  "dutch_air_raid": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "ntmadditions:dutch_air_raid",
+        "stream": true
+      }
+    ]
   }
 }

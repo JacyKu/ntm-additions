@@ -2,6 +2,7 @@ package com.ntmadditions.registry;
 
 import com.ntmadditions.NTMAdditions;
 import com.ntmadditions.item.CurioCharmItem;
+import com.ntmadditions.item.DutchAirRaidCassetteItem;
 import com.ntmadditions.item.WardBlockItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
@@ -29,6 +30,10 @@ public final class ModItems {
     public static final DeferredHolder<Item, BlockItem> PROTECTION_WARD =
             ITEMS.register("protection_ward",
                     () -> new WardBlockItem(ModBlocks.PROTECTION_WARD.get(), new Item.Properties()));
+
+    public static final DeferredHolder<Item, Item> DUTCH_AIR_RAID_CASSETTE =
+            ITEMS.register("cassette_dutch_air_raid",
+                    () -> new DutchAirRaidCassetteItem(new Item.Properties().stacksTo(1)));
 
     private ModItems() {}
 }
