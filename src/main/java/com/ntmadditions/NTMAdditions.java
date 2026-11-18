@@ -48,11 +48,14 @@ public final class NTMAdditions {
     }
 
     private static void onRegisterCommands(RegisterCommandsEvent event) {
-        MeteorCommand.register(event.getDispatcher());
+        if (NTMAdditionsConfig.ENABLE_METEOR_COMMAND.get()) {
+            MeteorCommand.register(event.getDispatcher());
+        }
     }
 
     /** Whether {@code player} has {@code item} equipped in any Curios slot. */
     public static boolean hasCurio(Player player, Item item) {
+        if (!NTMAdditionsConfig.ENABLE_CURIOS_CHARMS.get()) return false;
         return CuriosApi.getCuriosInventory(player)
                 .map(handler -> handler.isEquipped(item))
                 .orElse(false);

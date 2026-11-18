@@ -1,6 +1,7 @@
 package com.ntmadditions.registry;
 
 import com.ntmadditions.NTMAdditions;
+import com.ntmadditions.config.NTMAdditionsConfig;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -18,11 +19,17 @@ public final class ModCreativeTabs {
                     .title(Component.translatable("itemGroup.ntmadditions"))
                     .icon(() -> new ItemStack(ModItems.METEOR_CHARM_CURIO.get()))
                     .displayItems((parameters, output) -> {
-                        output.accept(ModItems.METEOR_CHARM_CURIO.get());
-                        output.accept(ModItems.PROTECTION_CHARM_CURIO.get());
-                        output.accept(ModItems.METEOR_WARD.get());
-                        output.accept(ModItems.PROTECTION_WARD.get());
-                        output.accept(ModItems.DUTCH_AIR_RAID_CASSETTE.get());
+                        if (NTMAdditionsConfig.ENABLE_CURIOS_CHARMS.get()) {
+                            output.accept(ModItems.METEOR_CHARM_CURIO.get());
+                            output.accept(ModItems.PROTECTION_CHARM_CURIO.get());
+                        }
+                        if (NTMAdditionsConfig.ENABLE_WARDS.get()) {
+                            output.accept(ModItems.METEOR_WARD.get());
+                            output.accept(ModItems.PROTECTION_WARD.get());
+                        }
+                        if (NTMAdditionsConfig.ENABLE_SIREN.get()) {
+                            output.accept(ModItems.DUTCH_AIR_RAID_CASSETTE.get());
+                        }
                     })
                     .build());
 

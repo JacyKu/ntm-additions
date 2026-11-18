@@ -1,11 +1,13 @@
 package com.ntmadditions.item;
 
+import com.ntmadditions.config.NTMAdditionsConfig;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 /**
@@ -29,6 +31,11 @@ public class CurioCharmItem extends Item implements ICurioItem {
 
     public boolean repelsMeteors() {
         return !meteor;
+    }
+
+    @Override
+    public boolean canEquip(SlotContext slotContext, ItemStack stack) {
+        return NTMAdditionsConfig.ENABLE_CURIOS_CHARMS.get();
     }
 
     @Override

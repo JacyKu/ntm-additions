@@ -4,6 +4,7 @@ import com.hbm.entity.projectile.EntityMeteor;
 import com.hbm.handler.BossSpawnHandler;
 import com.ntmadditions.NTMAdditions;
 import com.ntmadditions.block.WardManager;
+import com.ntmadditions.config.NTMAdditionsConfig;
 import com.ntmadditions.registry.ModItems;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +31,8 @@ public abstract class BossSpawnHandlerMixin {
     @Inject(method = "strike", at = @At("HEAD"), cancellable = true)
     private static void ntmadditions$stopMeteor(ServerLevel level, Player player,
                                                 CallbackInfoReturnable<EntityMeteor> cir) {
-        if (NTMAdditions.hasCurio(player, ModItems.METEOR_CHARM_CURIO.get())) {
+        if (NTMAdditionsConfig.ENABLE_CURIOS_CHARMS.get()
+                && NTMAdditions.hasCurio(player, ModItems.METEOR_CHARM_CURIO.get())) {
             cir.setReturnValue(null);
         }
     }
@@ -39,7 +41,8 @@ public abstract class BossSpawnHandlerMixin {
             at = @At(value = "INVOKE",
                     target = "Lcom/hbm/handler/BossSpawnHandler;spawnMeteorAtPlayer(Lnet/minecraft/world/entity/player/Player;Z)Lcom/hbm/entity/projectile/EntityMeteor;"))
     private static EntityMeteor ntmadditions$repelMeteor(Player player, boolean repell) {
-        boolean repelled = NTMAdditions.hasCurio(player, ModItems.PROTECTION_CHARM_CURIO.get());
+        boolean repelled = NTMAdditionsConfig.ENABLE_CURIOS_CHARMS.get()
+                && NTMAdditions.hasCurio(player, ModItems.PROTECTION_CHARM_CURIO.get());
         return BossSpawnHandler.spawnMeteorAtPlayer(player, repell || repelled);
     }
 

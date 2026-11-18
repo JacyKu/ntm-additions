@@ -1,5 +1,6 @@
 package com.ntmadditions.block;
 
+import com.ntmadditions.config.NTMAdditionsConfig;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,7 +26,7 @@ public final class WardManager {
     private WardManager() {}
 
     public static void add(Level level, BlockPos pos) {
-        if (level.isClientSide) return;
+        if (!NTMAdditionsConfig.ENABLE_WARDS.get() || level.isClientSide) return;
         WARDS.computeIfAbsent(level.dimension(), key -> new HashSet<>()).add(pos.immutable());
     }
 
@@ -40,6 +41,7 @@ public final class WardManager {
 
     /** Whether the player is inside the radius of a loaded ward of the given type. */
     public static boolean isProtected(Player player, WardType type) {
+        if (!NTMAdditionsConfig.ENABLE_WARDS.get()) return false;
         if (!(player.level() instanceof ServerLevel level)) return false;
 
         Set<BlockPos> positions = WARDS.get(level.dimension());
@@ -74,6 +76,7 @@ public final class WardManager {
     }
 
     private static boolean isProtectedAt(Level level, double x, double z, WardType type) {
+        if (!NTMAdditionsConfig.ENABLE_WARDS.get()) return false;
         if (!(level instanceof ServerLevel)) return false;
 
         Set<BlockPos> positions = WARDS.get(level.dimension());

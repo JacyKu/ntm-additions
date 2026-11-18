@@ -6,7 +6,7 @@ A small NeoForge 1.21.1 addon for [NTM Continuum](https://github.com/Warfactory-
 
 Random NTM Additions adds random things we wanted in "NTM: Continuum" for our server.
 
-**Version 0.2.0**
+**Version 0.3.0.1**
 
 ## What it adds
 
@@ -52,6 +52,10 @@ Machine fluid tanks no longer rupture when storing highly corrosive fluids. The 
 
 The antimatter rupture path is unchanged. Steel barrels still convert to corroded barrels when exposed to highly corrosive fluids; this change only affects the machine fluid tank's corrosive rupture.
 
+### Steel pipe impact sound
+
+Dropped steel pipes (`hbm:pipes_steel`) play a metal pipe falling sound when they first land. The sound plays at the pipe's position with a modest volume and fades out over roughly 24 blocks instead of playing globally.
+
 ### Command
 
 `/ntmadditions meteor [targets]` (permission level 2) calls NTM's natural meteor strike path for the targeted players. With no target it strikes the executing player. It uses NTM's normal spawn height, random offset, fall, impact, and charm/ward checks.
@@ -75,12 +79,19 @@ The antimatter rupture path is unchanged. Steel barrels still convert to corrode
 - A Mixin into `com.hbm.handler.BossSpawnHandler` makes the meteor checks see the Curios items and applies ward effects at the meteor's actual spawn point.
 - A Mixin into `TileEntityMachineFluidTank.serverTick` suppresses only the highly-corrosive `explode()` call.
 - The Dutch Air Raid track is registered through NTM's `ItemCassette.TrackType.register(...)` and uses the custom `ntmadditions:dutch_air_raid` sound event.
+- A Mixin into `ItemEntity.tick` detects when a dropped steel pipe lands and plays the positional metal pipe impact sound once.
 
 ## Configuration
 
 `config/ntmadditions-common.toml`:
 
-- `localMinePrimeSound` (default `true`) — when enabled, the mine arming sound uses a custom local sound event that fades out over 32 blocks instead of NTM's long-range volume-3 sound. Disabled keeps NTM's original sound and volume. Explosions, damage, block destruction, and radiation are unchanged. The bundled sound is a mono downmix of NTM's `hbm:weapon/fstbmbstart` so it can be attenuated positionally.
+- `enableCuriosCharms` (default `true`) - master switch for the Curios charm items and their effects. Curios slot data remains installed; when disabled, the charms cannot be equipped and grant no effects.
+- `enableWards` (default `true`) - master switch for the Meteor Ward and Protection Ward blocks and their protection effects.
+- `enableSiren` (default `true`) - master switch for the Dutch Air Raid siren track and its cassette item.
+- `enableMeteorCommand` (default `true`) - master switch for the `/ntmadditions meteor` command.
+- `localMinePrimeSound` (default `true`) - when enabled, the mine arming sound uses a custom local sound event that fades out over 32 blocks instead of NTM's long-range volume-3 sound. Disabled keeps NTM's original sound and volume. Explosions, damage, block destruction, and radiation are unchanged. The bundled sound is a mono downmix of NTM's `hbm:weapon/fstbmbstart` so it can be attenuated positionally.
+- `preventCorrosiveTankRupture` (default `true`) — when enabled, highly corrosive fluids no longer rupture machine fluid tanks. Set to false to restore NTM's original rupture behavior. Antimatter explosions and steel barrel corrosion are unaffected.
+- `metalPipeFallingSound` (default `true`) — when enabled, dropped steel pipes play a positional metal pipe falling sound when they land. The sound fades out over roughly 24 blocks and is intentionally kept at a modest volume.
 
 ## Recipes
 

@@ -1,5 +1,6 @@
 package com.ntmadditions.block;
 
+import com.ntmadditions.config.NTMAdditionsConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -45,6 +46,9 @@ public abstract class WardBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
                                                Player player, BlockHitResult hitResult) {
+        if (!NTMAdditionsConfig.ENABLE_WARDS.get()) {
+            return InteractionResult.PASS;
+        }
         if (!(level.getBlockEntity(pos) instanceof WardBlockEntity ward)) {
             return InteractionResult.PASS;
         }

@@ -6,7 +6,12 @@
   "mixins": [
     "BossSpawnHandlerMixin",
     "FluidTankMixin",
+    "HbmRadiationMapThreadSafetyMixin",
+    "ItemEntityMixin",
     "TileEntityLandmineMixin"
+  ],
+  "client": [
+    "SirenClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -17,5 +17,15 @@
         "stream": true
       }
     ]
+  },
+  "metal_pipe_fall": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "ntmadditions:metal_pipe_fall",
+        "stream": false,
+        "attenuation_distance": 24
+      }
+    ]
   }
 }

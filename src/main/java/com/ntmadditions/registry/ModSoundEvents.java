@@ -35,5 +35,15 @@ public final class ModSoundEvents {
                     () -> SoundEvent.createVariableRangeEvent(
                             ResourceLocation.fromNamespaceAndPath(NTMAdditions.MOD_ID, "dutch_air_raid")));
 
+    /**
+     * Positional metal pipe impact. A fixed 24-block range keeps it local while still allowing a
+     * smooth distance fade instead of a hard cutoff.
+     */
+    public static final DeferredHolder<SoundEvent, SoundEvent> METAL_PIPE_FALL =
+            SOUND_EVENTS.register("metal_pipe_fall",
+                    () -> SoundEvent.createFixedRangeEvent(
+                            ResourceLocation.fromNamespaceAndPath(NTMAdditions.MOD_ID, "metal_pipe_fall"),
+                            24.0F));
+
     private ModSoundEvents() {}
 }
